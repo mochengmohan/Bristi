@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Toto</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(180deg, #ffafbd 0%, #ffc3a0 100%);
+        }
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
+        }
+    </style>
+</head>
+<body class="gradient-bg h-screen flex flex-col items-center justify-center overflow-hidden">
+    <div id="question-container" class="text-center">
+        <img id="image-display" class="rounded-2xl h-[300px] mb-4" src="https://media.tenor.com/tE_7s1v86MAAAAAM/peach-goma.gif" alt="Cute GIF" />
+        <h1 id="main-question" class="text-4xl font-bold text-[#bd2e2e] my-4">Toto, Do you love me? 💕</h1>
+        <div class="flex gap-4 justify-center items-center" id="buttons">
+            <button id="yesButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg text-lg transition-all">
+                Yes
+            </button>
+            <button id="noButton" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg text-lg">
+                No
+            </button>
+        </div>
+    </div>
+
+    <div id="response-container" class="hidden text-center">
+        <img class="rounded-2xl h-[300px] mb-4" src="https://media.tenor.com/gU_Pb_7p_5YAAAAM/cute-kawaii.gif" alt="Happy GIF" />
+        <h1 class="text-4xl font-bold text-[#bd2e2e] my-4">I knew it! Love you too, Toto! ❤️</h1>
+    </div>
+
+    <script>
+        const yesButton = document.getElementById('yesButton');
+        const noButton = document.getElementById('noButton');
+        const questionContainer = document.getElementById('question-container');
+        const responseContainer = document.getElementById('response-container');
+        const mainImage = document.getElementById('image-display');
+
+        let noCount = 0;
+        const messages = [
+            "Are you sure?",
+            "Really sure??",
+            "Think again!",
+            "Last chance!",
+            "Surely not?",
+            "You might regret this!",
+            "Give it another thought!",
+            "Are you absolutely sure?",
+            "This could be a mistake!",
+            "Have a heart!",
+            "Don't be so cold!",
+            "Change of mind?",
+            "Wouldn't you reconsider?",
+            "Is that your final answer?",
+            "You're breaking my heart ;("
+        ];
+
+        noButton.addEventListener('click', () => {
+            noCount++;
+            // Make Yes button bigger
+            const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+            yesButton.style.fontSize = `${currentSize * 1.5}px`;
+            yesButton.style.padding = `${currentSize * 0.8}px ${currentSize * 1.5}px`;
+            
+            // Change No button text
+            if (noCount < messages.length) {
+                noButton.innerText = messages[noCount];
+            } else {
+                noButton.innerText = messages[messages.length - 1];
+            }
+
+            // Change image based on clicks
+            if (noCount === 1) mainImage.src = "https://media.tenor.com/9lS6O5YqA_UAAAAM/cry-cute.gif";
+            if (noCount === 3) mainImage.src = "https://media.tenor.com/9nF_m7_h_7MAAAAAM/sad-cute.gif";
+        });
+
+        yesButton.addEventListener('click', () => {
+            questionContainer.classList.add('hidden');
+            responseContainer.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
